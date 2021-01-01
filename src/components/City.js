@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import "../App.css";
 
 // props -> cityName ,temp, color
 function City({ cityName, temp, color }) {

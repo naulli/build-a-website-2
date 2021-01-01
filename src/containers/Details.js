@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
-// TODO
-// - implement API
-// - add props to details screen
-// - style the details screen
+import WeatherImage from "../components/WeatherImage";
+import "../App.css";
 
 function Details() {
   const history = useHistory();
   const [weatherData, setWeatherData] = useState(null);
-  const [city, setCity] = useState("Crema");
+  const [city, setCity] = useState("");
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_WEATHER_KEY);
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API}`
       )
       .then(function (response) {
         // Successful request
@@ -32,7 +28,7 @@ function Details() {
   useEffect(() => {
     const searchParams = history.location.search;
     const urlParams = new URLSearchParams(searchParams);
-    const city = urlParams.get("city");
+    const city = urlParams.get("name");
     if (city) {
       setCity(city);
     }
@@ -78,10 +74,11 @@ function Details() {
 
   return (
     // Container
-    <div className="flex flex-col items-center h-screen bg-green-200">
+    <div className="flex flex-col items-center bg-yellow-300">
       <div className="p-8 text-2xl font-bold">Weather in {city}</div>
 
       <div className="flex flex-col p-8 m-4 border-2 rounded-md border-gray-700 items-center">
+        <WeatherImage weatherType={weatherType} className="text-xl" />
         <div>{weatherType}</div>
         <div>Current Temperature : {currentTemp}</div>
       </div>
