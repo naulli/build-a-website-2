@@ -12,6 +12,24 @@ function Home() {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState("Crema");
 
+  const [cities, setCities] = useState([
+    {
+      name: "Jakarta",
+      currentTemp: "0",
+      color: "bg-yellow-500",
+    },
+    {
+      name: "Bandung",
+      currentTemp: "0",
+      color: "bg-yellow-500",
+    },
+    {
+      name: "Bogor",
+      currentTemp: "0",
+      color: "bg-yellow-500",
+    },
+  ]);
+
   useEffect(() => {
     // console.log(process.env.REACT_APP_WEATHER_KEY);
     axios // axios is to get data from an API,you can also use axios to put/edit and delete data
@@ -51,14 +69,15 @@ function Home() {
     };
   }, [weatherData]);
 
+  console.log("weatherData", weatherData);
+  console.log("currentTemp", currentTemp);
+
   return (
     // Container
     <div className="flex flex-col h-screen bg-green-200">
-      <City cityName={city} temp={currentTemp} color={"bg-yellow-500"} />
-
-      <City cityName={city} temp={currentTemp} color={"bg-pink-500"} />
-
-      <City cityName={city} temp={currentTemp} color={"bg-purple-500"} />
+      {cities.map((item, index) => {
+        <City cityName={item.name} item={item.currentTemp}color={item.color}/>;
+      )};
     </div>
   );
 }
